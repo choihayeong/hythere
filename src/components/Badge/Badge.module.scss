@@ -1,0 +1,37 @@
+.root {
+  // 색상은 --badge-color 하나만 바꾸면 배경·글자·테두리가 함께 바뀌도록 설계
+  --badge-color: var(--color-text-muted);
+
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-on-primary);
+  white-space: nowrap;
+  background: var(--badge-color);
+  border: 1px solid var(--badge-color);
+  border-radius: 999px;
+}
+
+.neutral {
+  --badge-color: var(--color-text-muted);
+}
+.primary {
+  --badge-color: var(--color-primary);
+}
+.success {
+  --badge-color: var(--color-success);
+}
+.warning {
+  --badge-color: var(--color-warning);
+}
+.danger {
+  --badge-color: var(--color-danger);
+}
+
+.outline {
+  color: var(--badge-color);
+  background: transparent;
+}

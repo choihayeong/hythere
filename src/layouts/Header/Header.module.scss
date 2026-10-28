@@ -1,0 +1,161 @@
+@use 'mixins' as *;
+
+// 화면 위에 고정. 히어로(어두운 배경) 위에서도 읽히도록 어두운 반투명 배경을 쓴다.
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-height);
+  color: var(--color-on-dark);
+  background: rgb(31 44 55 / 0.85);
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.3s ease-out,
+    backdrop-filter 0.3s ease-out;
+}
+
+// 히어로 위에 있을 때: 배경을 비워 밤하늘이 그대로 비치게
+.transparent {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.inner {
+  position: relative; // 모바일 메뉴 패널(absolute)의 기준
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+
+  @include mq(md) {
+    padding: 0 var(--space-6);
+  }
+}
+
+.logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: 8px; // 포커스 링이 아이콘 모서리를 따라가게
+  transition: transform 0.2s ease-out;
+  @include focus-ring;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+// --- 햄버거 버튼 (모바일 전용) ---
+.toggle {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  width: 44px; // 터치 목표 최소 크기 (WCAG 2.5.8)
+  height: 44px;
+  padding: 10px;
+  margin-right: calc(var(--space-2) * -1); // 아이콘이 시각적으로 메뉴 오른쪽 끝에 맞도록
+  border-radius: var(--radius-sm);
+  @include focus-ring;
+
+  @include mq(md) {
+    display: none;
+  }
+}
+
+.bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: currentcolor;
+  border-radius: 1px;
+  transition:
+    transform 0.25s ease-out,
+    opacity 0.25s ease-out;
+  transform-origin: center;
+}
+
+// 열렸을 때 세 줄 → X. 가운데 줄은 숨기고 위·아래 줄을 가운데로 모아 45° 회전
+.open .bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.open .bar:nth-child(2) {
+  opacity: 0;
+}
+.open .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+// --- 메뉴 ---
+// 모바일: 헤더 아래로 펼쳐지는 패널. 기본은 숨김, .open 일 때만 보인다.
+.nav {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  display: none;
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  background: var(--color-dark); // 뒤의 히어로 글자가 비치지 않게 불투명
+  box-shadow: var(--shadow-md);
+
+  .open & {
+    display: block;
+  }
+
+  // 데스크톱: 패널이 아니라 헤더 안의 가로 메뉴
+  @include mq(md) {
+    position: static;
+    display: block;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+
+  @include mq(md) {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+
+  a {
+    // 안쪽의 시각적 숨김 텍스트(position:absolute)가 링크 밖으로 튀어나가지 않도록 기준점이 된다
+    position: relative;
+    display: block;
+    padding: var(--space-3) 0;
+    color: rgb(255 255 255 / 0.85);
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+
+    @include mq(md) {
+      display: inline-block;
+      padding: var(--space-2) 0;
+      color: rgb(255 255 255 / 0.75);
+      border-bottom: 2px solid transparent;
+
+      &:hover {
+        border-color: var(--color-accent);
+      }
+    }
+  }
+}
+
+.srOnly {
+  @include visually-hidden;
+}

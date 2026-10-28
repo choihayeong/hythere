@@ -1,0 +1,16 @@
+{
+  // 저장할 때 Prettier로 자동 포맷
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // 저장할 때 ESLint가 고칠 수 있는 것은 자동 수정
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  // 프로젝트에 설치된 TypeScript 버전 사용 (Next.js 플러그인 활성화)
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // CSS Modules 클래스 자동완성에 도움
+  "scss.validate": true,
+  "files.eol": "\n"
+}

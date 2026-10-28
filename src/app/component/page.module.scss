@@ -1,0 +1,181 @@
+@use 'mixins' as *;
+
+.root {
+  display: grid;
+  gap: var(--space-8);
+  // 루트 레이아웃의 main 이 더 이상 폭을 제한하지 않으므로 이 페이지가 직접 컨테이너 역할을 한다.
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4);
+
+  @include mq(md) {
+    padding: var(--space-12) var(--space-6);
+  }
+}
+
+.pageHeader {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+
+  @include mq(md) {
+    font-size: var(--font-size-h1);
+  }
+}
+
+.lead {
+  color: var(--color-text-muted);
+}
+
+// 목차
+.toc {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: baseline;
+  }
+
+  a {
+    font-weight: 600;
+    color: var(--color-primary);
+    @include focus-ring;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.tocDesc {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+// 컴포넌트 섹션
+.section {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  // 목차에서 이동할 때 헤더에 가려지지 않도록 여유를 둔다.
+  scroll-margin-top: var(--space-4);
+}
+
+.heading {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.subheading {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.desc {
+  color: var(--color-text-muted);
+
+  code {
+    padding: 0 var(--space-1);
+    margin: 0 2px;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+}
+
+// 데모 영역: 흰 배경 위에 컴포넌트를 나열
+.demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.demoBlock {
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+// 세로로 쌓는 데모
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+// 스케일 표
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-md);
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-2);
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--color-text-muted);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  code {
+    font-family: var(--font-mono);
+  }
+
+  // 모바일에서는 '미리보기' 열이 잘리지 않게 가로 스크롤
+  @media (max-width: 767px) {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+// 화면에선 숨기고 스크린리더에만 읽히는 텍스트 (표 caption 등)
+.srOnly {
+  @include visually-hidden;
+}
+
+// 사용 예시 코드
+.code {
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}

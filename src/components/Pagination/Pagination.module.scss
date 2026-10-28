@@ -1,0 +1,83 @@
+@use 'mixins' as *;
+
+.root {
+  // 크기(size)별로 이 변수만 바꾼다
+  --pg-size: 40px;
+  --pg-font: var(--font-size-md);
+
+  display: flex;
+  justify-content: center;
+}
+
+.sm {
+  --pg-size: 32px;
+  --pg-font: var(--font-size-sm);
+}
+
+.md {
+  --pg-size: 40px;
+  --pg-font: var(--font-size-md);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+  justify-content: center;
+}
+
+// 번호 버튼과 이전/다음 버튼의 공통 모양
+%cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--pg-size);
+  height: var(--pg-size);
+  padding: 0 var(--space-2);
+  font-size: var(--pg-font);
+  font-weight: 500;
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    background: var(--color-surface);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+.pageButton {
+  @extend %cell;
+
+  // 현재 페이지: 별도 클래스 없이 aria-current 속성으로 스타일링
+  &[aria-current='page'] {
+    font-weight: 700;
+    color: var(--color-on-primary);
+    background: var(--color-primary);
+    cursor: default;
+  }
+}
+
+.control {
+  @extend %cell;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
+.ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--pg-size);
+  height: var(--pg-size);
+  color: var(--color-text-muted);
+  user-select: none;
+}

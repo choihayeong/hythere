@@ -1,0 +1,36 @@
+@use 'mixins' as *;
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+// 가로 폭·여백은 각 섹션(layouts/Section)이 알아서 잡는다.
+// main 에서 max-width 를 걸면 히어로처럼 화면을 꽉 채우는 섹션을 만들 수 없기 때문.
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+// 평소엔 숨기고, 키보드 포커스가 오면 화면 상단에 나타난다.
+.skipLink {
+  @include visually-hidden;
+
+  &:focus {
+    position: fixed;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 100;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: var(--space-2) var(--space-4);
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+    color: var(--color-on-primary);
+    background: var(--color-primary);
+    border-radius: var(--radius-sm);
+  }
+}

@@ -1,0 +1,85 @@
+.root {
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+}
+
+// --- 크기 (variant). 값은 _variables.scss 토큰에서만 가져온다. ---
+.h1 {
+  font-size: var(--font-size-h1); // 36px
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.02em;
+}
+
+.h2 {
+  font-size: var(--font-size-h2); // 24px
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+  letter-spacing: -0.01em;
+}
+
+.large {
+  font-size: var(--font-size-lg); // 18px
+  line-height: var(--line-height);
+}
+
+.base {
+  font-size: var(--font-size-base); // 16px
+  line-height: var(--line-height);
+}
+
+.medium {
+  font-size: var(--font-size-md); // 14px
+  line-height: 1.5;
+}
+
+.small {
+  font-size: var(--font-size-sm); // 13px
+  line-height: 1.5;
+}
+
+.xsmall {
+  font-size: var(--font-size-xs); // 11px
+  line-height: 1.4;
+}
+
+// --- 굵기. 지정하면 variant 기본 굵기를 덮어쓴다. ---
+.weight-regular {
+  font-weight: 400;
+}
+.weight-medium {
+  font-weight: 500;
+}
+.weight-bold {
+  font-weight: 700;
+}
+
+// --- 색상 ---
+.color-muted {
+  color: var(--color-text-muted);
+}
+.color-primary {
+  color: var(--color-primary);
+}
+.color-danger {
+  color: var(--color-danger);
+}
+
+// --- 정렬 ---
+.align-left {
+  text-align: left;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+
+// 한 줄 말줄임
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

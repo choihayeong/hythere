@@ -1,0 +1,118 @@
+@use 'mixins' as *;
+
+.root {
+  position: relative;
+  display: grid;
+  gap: var(--space-12);
+  padding-left: 0;
+
+  // 세로 선
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 28px;
+    width: 2px;
+    content: '';
+    background: var(--color-border);
+
+    @include mq(md) {
+      left: 50%;
+      margin-left: -1px;
+    }
+  }
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+
+  @include mq(md) {
+    grid-template-columns: 1fr 120px 1fr;
+    gap: var(--space-8);
+  }
+}
+
+.badge {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  border: 4px solid var(--color-border);
+  border-radius: 50%;
+
+  @include mq(md) {
+    grid-column: 2;
+    width: 120px;
+    height: 120px;
+    font-size: var(--font-size-h1);
+    border-width: 7px;
+  }
+}
+
+.panel {
+  min-width: 0;
+
+  @include mq(md) {
+    // 홀수 항목은 왼쪽(오른쪽 정렬), 짝수 항목은 오른쪽(왼쪽 정렬)
+    .item:nth-child(odd) & {
+      grid-row: 1;
+      grid-column: 1;
+      text-align: right;
+    }
+    .item:nth-child(even) & {
+      grid-column: 3;
+    }
+  }
+}
+
+.date {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.duration {
+  margin-left: var(--space-2);
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) 0 var(--space-3);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.position {
+  font-size: var(--font-size-md);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.tasks {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.stack {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.stackLabel {
+  font-weight: 700;
+  color: var(--color-text);
+}

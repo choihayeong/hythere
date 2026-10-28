@@ -1,0 +1,77 @@
+@use 'mixins' as *;
+
+.root {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.item {
+  & + & {
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+// heading 태그의 기본 여백·크기를 없애고 button이 전체를 차지하게 한다.
+.heading {
+  margin: 0;
+  font-size: inherit;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  text-align: left;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: background-color 0.15s;
+  @include focus-ring;
+
+  &:hover {
+    background: var(--color-surface);
+  }
+
+  // 열렸을 때(aria-expanded="true") 화살표를 뒤집는다.
+  // 별도 클래스 없이 접근성 속성을 스타일 조건으로 쓰면 상태와 모양이 어긋날 일이 없다.
+  &[aria-expanded='true'] .icon {
+    transform: rotate(180deg);
+  }
+
+  @include mq(md) {
+    padding: var(--space-4) var(--space-6);
+  }
+}
+
+.title {
+  flex: 1;
+}
+
+// 아래 방향 화살표 (CSS border로 그린 쉐브론)
+.icon {
+  flex-shrink: 0;
+  width: 0.6em;
+  height: 0.6em;
+  margin-top: -0.3em;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+
+.panel {
+  background: var(--color-bg);
+}
+
+.content {
+  padding: var(--space-1) var(--space-4) var(--space-4);
+  color: var(--color-text-muted);
+
+  @include mq(md) {
+    padding: var(--space-2) var(--space-6) var(--space-6);
+  }
+}

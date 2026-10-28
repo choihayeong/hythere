@@ -1,0 +1,95 @@
+@use 'mixins' as *;
+
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-6);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color 0.2s ease-out,
+    box-shadow 0.2s ease-out,
+    transform 0.2s ease-out;
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.thumb {
+  width: calc(100% + var(--space-6) * 2);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  margin: calc(var(--space-6) * -1) 0 var(--space-2) calc(var(--space-6) * -1); // 카드 안쪽 여백을 무시하고 가장자리까지
+  object-fit: cover;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+}
+
+.link {
+  // 카드 전체를 클릭 영역으로: ::after 가 카드를 덮는다 (카드 .root 가 position: relative)
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+.external {
+  margin-left: var(--space-1);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.summary {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.period {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.description {
+  display: grid;
+  gap: var(--space-1);
+  padding-top: var(--space-3);
+  padding-left: 1.2em;
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-sm);
+  list-style: disc;
+  color: var(--color-text-muted);
+  border-top: 1px dashed var(--color-border);
+}
+
+.srOnly {
+  @include visually-hidden;
+}

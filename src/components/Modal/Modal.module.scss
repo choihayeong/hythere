@@ -1,0 +1,119 @@
+@use 'mixins' as *;
+
+.root {
+  // <dialog>의 브라우저 기본 스타일(테두리, 여백) 초기화
+  width: calc(100% - var(--space-8));
+  max-width: var(--modal-width, 480px);
+  max-height: calc(100dvh - var(--space-8));
+  padding: 0;
+  margin: auto; // showModal() 상태에서 화면 중앙 정렬
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 0;
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.24);
+
+  // 닫힌 상태(open 속성 없음)는 브라우저가 display:none 처리한다.
+  &[open] {
+    animation: pop-in 0.18s ease-out;
+  }
+
+  // 배경 딤. ::backdrop는 dialog 전용 가상 요소라 별도 div가 필요 없다.
+  &::backdrop {
+    background: rgb(0 0 0 / 0.5);
+  }
+}
+
+// --- 너비 (size) ---
+.sm {
+  --modal-width: 360px;
+}
+.md {
+  --modal-width: 480px;
+}
+.lg {
+  --modal-width: 720px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - var(--space-8));
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+
+  @include mq(md) {
+    padding: var(--space-6) var(--space-6) var(--space-4);
+  }
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  line-height: var(--line-height-heading);
+}
+
+.close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin: -4px -8px -4px 0;
+  font-size: var(--font-size-h2);
+  line-height: 1;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  @include focus-ring;
+
+  &:hover {
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+}
+
+// 본문이 길면 이 영역만 스크롤
+.body {
+  flex: 1;
+  padding: var(--space-4);
+  overflow-y: auto;
+
+  @include mq(md) {
+    padding: var(--space-6);
+  }
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-border);
+
+  @include mq(md) {
+    padding: var(--space-4) var(--space-6) var(--space-6);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[open] {
+    animation: none;
+  }
+}

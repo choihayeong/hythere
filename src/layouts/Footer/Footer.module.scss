@@ -1,0 +1,38 @@
+@use 'mixins' as *;
+
+.root {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-4);
+
+  a {
+    position: relative; // 숨김 텍스트의 기준점
+    font-weight: 600;
+    @include focus-ring;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
+
+.srOnly {
+  @include visually-hidden;
+}

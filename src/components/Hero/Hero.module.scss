@@ -1,0 +1,266 @@
+@use 'mixins' as *;
+
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100dvh;
+  // 헤더(sticky)는 문서 흐름 안에 있어 히어로가 그 아래에서 시작한다.
+  // 헤더 높이만큼 위로 끌어올리고 같은 만큼 안쪽 여백을 주면, 투명해진 헤더 뒤까지 밤하늘이 깔린다.
+  margin-top: calc(var(--header-height) * -1);
+  padding-top: var(--header-height);
+  overflow: hidden;
+  color: var(--color-on-dark);
+  // 운영 사이트와 같은 네이비 → 흰색 그라데이션
+  background: linear-gradient(var(--color-dark) 0%, var(--color-bg) 100%);
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; // 장식 레이어가 클릭을 가로채지 않게
+}
+
+// 보라·노랑 빛 번짐
+.light {
+  position: absolute;
+  inset: 0;
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    width: 120%;
+    content: '';
+  }
+
+  &::before {
+    top: 40%;
+    left: -25%;
+    height: 120%;
+    background: radial-gradient(
+      48% 48% at 50% 59%,
+      var(--color-primary) 0%,
+      rgb(142 133 190 / 0.4) 43%,
+      transparent 100%
+    );
+  }
+
+  &::after {
+    top: 65%;
+    left: 25%;
+    height: 100%;
+    background: radial-gradient(
+      48% 48% at 50% 59%,
+      var(--color-accent) 0%,
+      rgb(180 174 113 / 0.45) 38%,
+      transparent 100%
+    );
+  }
+}
+
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  // opacity 만 애니메이션하면 레이아웃·페인트 없이 합성 단계에서 처리돼 가볍다
+  animation: twinkle 3s linear infinite alternate;
+}
+
+.star1 {
+  animation-duration: 3s;
+}
+.star2 {
+  animation-duration: 4s;
+}
+.star3 {
+  animation-duration: 3.5s;
+  animation-delay: 0.5s;
+}
+.star4 {
+  animation-duration: 1.25s;
+  animation-delay: 1.5s;
+}
+.star5 {
+  animation-duration: 4s;
+  animation-delay: 2s;
+}
+.star6 {
+  animation-duration: 2.5s;
+  animation-delay: 1s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+// 아래쪽 파도. 흰색 SVG 를 반복 배경으로 깔고 가로로 흘려보낸다.
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 100' preserveAspectRatio='none'%3e%3cpath fill='%23fff' d='M0 48C125 4 375 4 500 48s375 44 500 0v52H0Z'/%3e%3c/svg%3e")
+    0 0 / 1000px 100px repeat-x;
+}
+
+.wave1 {
+  z-index: 4;
+  animation: wave 30s linear infinite;
+}
+.wave2 {
+  bottom: 10px;
+  z-index: 3;
+  opacity: 0.5;
+  animation: wave-reverse 15s linear -5s infinite;
+}
+.wave3 {
+  bottom: 15px;
+  z-index: 2;
+  opacity: 0.2;
+  animation: wave 30s linear -2s infinite;
+}
+.wave4 {
+  bottom: 20px;
+  z-index: 1;
+  opacity: 0.7;
+  animation: wave-reverse 5s linear -5s infinite;
+}
+
+@keyframes wave {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 1000px;
+  }
+}
+@keyframes wave-reverse {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -1000px;
+  }
+}
+
+// 다크모드에선 파도(흰색)가 배경과 안 맞으므로 어두운 색 파도로 바꾼다
+@media (prefers-color-scheme: dark) {
+  .wave {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 100' preserveAspectRatio='none'%3e%3cpath fill='%23141c24' d='M0 48C125 4 375 4 500 48s375 44 500 0v52H0Z'/%3e%3c/svg%3e");
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-4) calc(var(--space-24) + 60px);
+
+  @include mq(md) {
+    padding: var(--space-16) var(--space-6) calc(var(--space-24) + 100px);
+  }
+}
+
+.greeting {
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.name {
+  margin-top: var(--space-6);
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: right;
+  text-transform: uppercase;
+  // 글자 속은 비우고 테두리만 — 운영 사이트의 이름 표시 방식
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+
+  @include mq(md) {
+    margin-top: var(--space-8);
+  }
+}
+
+.tagline {
+  max-width: 32rem;
+  margin: var(--space-8) 0 0 auto;
+  font-size: var(--font-size-lg);
+  color: var(--color-accent);
+  text-align: right;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-end;
+  margin-top: var(--space-8);
+}
+
+.contactLabel {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.contactList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+// 테두리 없는 알약 링크. 반투명 흰 배경으로 클릭 영역만 살짝 드러내고, hover 하면 레몬색으로 채워진다.
+.contactLink {
+  position: relative; // 안쪽 숨김 텍스트의 기준점
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: baseline;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-md);
+  color: var(--color-on-dark);
+  background: rgb(255 255 255 / 0.12);
+  border-radius: 999px;
+  transition:
+    background 0.2s ease-out,
+    color 0.2s ease-out;
+
+  &:hover {
+    color: var(--color-dark);
+    background: var(--color-accent);
+  }
+
+  &:focus-visible {
+    outline-color: var(--color-accent);
+  }
+}
+
+.contactKind {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+.srOnly {
+  @include visually-hidden;
+}

@@ -1,0 +1,94 @@
+@use 'mixins' as *;
+
+.root {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.list {
+  display: flex;
+  gap: var(--space-1);
+  // 탭이 많아 넘치면 가로 스크롤
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tab {
+  flex-shrink: 0;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  border-radius: var(--radius-sm);
+  transition:
+    color 0.15s,
+    background-color 0.15s,
+    border-color 0.15s;
+  @include focus-ring;
+
+  &:hover:not(:disabled) {
+    color: var(--color-text);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  // 선택 상태는 별도 클래스 대신 aria-selected 속성으로 스타일링 → 상태와 모양이 항상 일치
+  &[aria-selected='true'] {
+    color: var(--color-primary);
+  }
+}
+
+// --- 모양 (variant) ---
+.underline {
+  .list {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tab {
+    margin-bottom: -1px; // 선택 밑줄이 목록 테두리 위에 겹치도록
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+
+    &[aria-selected='true'] {
+      border-bottom-color: var(--color-primary);
+    }
+  }
+}
+
+.pill {
+  .list {
+    gap: var(--space-2);
+    padding: var(--space-1);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .tab {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+
+    &[aria-selected='true'] {
+      color: var(--color-text);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}
+
+.fullWidth .tab {
+  flex: 1;
+  text-align: center;
+}
+
+.panel {
+  border-radius: var(--radius-sm);
+  @include focus-ring;
+}

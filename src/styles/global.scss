@@ -1,0 +1,49 @@
+// 전역 스타일 진입점. app/layout.tsx 에서 한 번만 import 한다.
+// 순서: 토큰 → 리셋 → 기본 요소 스타일
+@use 'variables';
+@use 'reset';
+
+html {
+  // 헤더 메뉴의 #careers 같은 앵커 이동을 부드럽게. 고정 헤더 높이만큼 여백을 두어 제목이 가려지지 않게 한다.
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+::selection {
+  color: var(--color-on-dark);
+  background: var(--color-dark);
+}
+
+// 키보드 사용자에게 포커스 위치를 보여준다.
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+// 모달(<dialog>)이 열려 있으면 뒤쪽 페이지 스크롤을 막는다.
+// :has()로 JS 없이 처리. (dialog가 열리면 open 속성이 붙는다)
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+// 움직임을 줄이도록 설정한 사용자에겐 애니메이션·부드러운 스크롤을 끈다. (WCAG 2.3.3)
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
