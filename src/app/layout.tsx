@@ -9,6 +9,12 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '@/styles/global.scss';
 import styles from './layout.module.scss';
 
+// 배포 주소. VERCEL_PROJECT_PRODUCTION_URL 은 Vercel 의 시스템 환경변수로, 프로덕션 도메인(https:// 제외)이 들어 있다.
+// 로컬에서는 이 값이 없으므로 localhost 로 대체한다.
+const SITE_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : 'http://localhost:3000';
+
 const SITE_NAME = '최하영 포트폴리오';
 const TITLE = '최하영 | Frontend & UI Developer';
 const DESCRIPTION = '프론트엔드 및 UI 개발자 최하영의 경력과 프로젝트를 소개하는 포트폴리오입니다.';
@@ -16,7 +22,9 @@ const DESCRIPTION = '프론트엔드 및 UI 개발자 최하영의 경력과 프
 // 페이지 <head>의 title, description, OG 태그를 여기서 선언한다. (Next.js가 <head>를 대신 만들어 줌)
 export const metadata: Metadata = {
   // OG 이미지 등 상대 경로를 절대 URL 로 바꿀 때 쓰는 기준 주소. (공유 미리보기는 절대 URL 이어야 한다)
-  metadataBase: new URL('https://hythere22.vercel.app'),
+  // 주소를 직접 적지 않고 Vercel 이 빌드 때 넣어 주는 환경변수에서 읽는다.
+  // 도메인이 바뀌거나 커스텀 도메인을 연결해도 코드를 고칠 필요가 없다.
+  metadataBase: new URL(SITE_URL),
   title: {
     default: TITLE,
     template: `%s | 최하영`,

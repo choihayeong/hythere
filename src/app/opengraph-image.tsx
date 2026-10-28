@@ -9,6 +9,9 @@ export const alt = 'Choi Hayeong — Frontend & UI Developer';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+// 이미지에 찍을 사이트 주소. layout.tsx 의 metadataBase 와 같은 환경변수를 쓴다.
+const SITE_HOST = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? 'Frontend Portfolio';
+
 export default async function OpenGraphImage() {
   // 굵은 글꼴. 빌드 때 서버에서만 읽으므로 방문자에게 전송되지 않는다.
   const bold = await readFile(
@@ -36,7 +39,7 @@ export default async function OpenGraphImage() {
           <path d="M18 16h8v13h12V16h8v32h-8V36H26v12h-8z" fill="#5a5aff" />
           <circle cx="53" cy="12" r="5" fill="#fff689" />
         </svg>
-        <div style={{ fontSize: 28, opacity: 0.8, letterSpacing: 1 }}>hythere22.vercel.app</div>
+        <div style={{ fontSize: 28, opacity: 0.8, letterSpacing: 1 }}>{SITE_HOST}</div>
       </div>
 
       {/* 가운데: 이름 + 직함 */}
