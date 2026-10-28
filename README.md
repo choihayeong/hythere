@@ -1,7 +1,6 @@
 # Hythere! — 최하영 포트폴리오
 
 프론트엔드 및 UI 개발자 최하영의 포트폴리오 사이트입니다.
-Vue 기반으로 운영하던 기존 사이트(https://hythere22.vercel.app)를 Next.js로 다시 만들었습니다.
 
 ## 구성
 
